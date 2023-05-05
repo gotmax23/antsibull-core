@@ -414,7 +414,7 @@ class CollectionDownloader(GalaxyClient):
             trust_collection_cache = lib_ctx.trust_collection_cache
         self.trust_collection_cache: t.Final[bool] = trust_collection_cache
 
-    async def download(
+    async def download(  # noqa: C901
         self,
         collection: str,
         version: str | semver.Version,
@@ -431,6 +431,9 @@ class CollectionDownloader(GalaxyClient):
         namespace, name = collection.split(".", 1)
         filename = f"{namespace}-{name}-{version}.tar.gz"
         download_filename = os.path.join(self.download_dir, filename)
+
+        if os.path.isfile(download_filename):
+            return download_filename
 
         if self.collection_cache and self.trust_collection_cache:
             cached_copy = os.path.join(self.collection_cache, filename)

@@ -133,7 +133,9 @@ class AnsibleCorePyPiClient:
         versions = await self.get_versions()
         return versions[0]
 
-    async def retrieve(self, ansible_core_version: str, download_dir: str) -> str:
+    async def retrieve(  # noqa: C901
+        self, ansible_core_version: str, download_dir: str
+    ) -> str:
         """
         Get the release from pypi.
 
@@ -146,6 +148,9 @@ class AnsibleCorePyPiClient:
 
         tar_filename = f"{package_name}-{ansible_core_version}.tar.gz"
         tar_path = os.path.join(download_dir, tar_filename)
+
+        if os.path.isfile(tar_path):
+            return tar_path
 
         lib_ctx = app_context.lib_ctx.get()
         if lib_ctx.ansible_core_cache and lib_ctx.trust_ansible_core_cache:

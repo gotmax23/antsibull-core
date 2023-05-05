@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - When downloading ansible collections from Galaxy, don't re-download files that already exist in the download directory (https://github.com/ansible-community/antsibull-core/pull/86).
+  - When downloading ansible-core sdists from PyPI, don't re-download files that already exist in the download directory (https://github.com/ansible-community/antsibull-core/pull/86).
